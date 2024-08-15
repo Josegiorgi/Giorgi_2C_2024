@@ -17,6 +17,18 @@
         },
         {
             "path": "./projects/x_template"
+        },
+        {
+            "path": "projects/guia1_ej.3"
+        },
+        {
+            "path": "projects/guia1_ej.4"
+        },
+        {
+            "path": "projects/guia1_ej.5"
+        },
+        {
+            "path": "projects/guia1_ej.6"
         }
     ],
     "settings": {

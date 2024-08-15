@@ -17,9 +17,9 @@
  *
  * |   Date	    | Description                                    |
  * |:----------:|:-----------------------------------------------|
- * | 12/09/2023 | Document creation		                         |
+ * | 8/08/2024 | Ejercicio 3 de Guia 1		                         |
  *
- * @author Albano Peñalva\ (albano.penalva@uner.edu.ar)
+ * @author Josefina Giorgi\ (josefina.giorgi@ingenieria.uner.edu.ar)
  *
  */
 
@@ -118,6 +118,5 @@ void app_main(void){
 	LEDS.n_ciclos = LEDS.n_ciclos*2; //La función TOGGLE realiza cambios, no ciclos completos. Por lo que si no agrego esta línea, en vez de realizarse 10 ciclos encendido/apagado, se realizan la mitad.
 	LEDS.periodo = 500;
 	controladorLEDs(&LEDS);
-}
 }
 /*==================[end of file]============================================*/
