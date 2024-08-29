@@ -114,7 +114,7 @@ void app_main(void){
 
 	LEDS.mode = 3;
 	LEDS.n_led = 3;
-	LEDS.n_ciclos = 2000;
+	LEDS.n_ciclos = 10;
 	LEDS.n_ciclos = LEDS.n_ciclos*2; //La función TOGGLE realiza cambios, no ciclos completos. Por lo que si no agrego esta línea, en vez de realizarse 10 ciclos encendido/apagado, se realizan la mitad.
 	LEDS.periodo = 500;
 	controladorLEDs(&LEDS);

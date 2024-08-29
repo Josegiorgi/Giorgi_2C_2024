@@ -27,6 +27,8 @@
 #include <stdio.h>
 #include <stdint.h>
 #include <gpio_mcu.h>
+#include <freertos/FreeRTOS.h>
+#include <freertos/task.h>
 
 /*==================[macros and definitions]=================================*/
 
@@ -37,16 +39,18 @@ typedef struct
 	io_t dir;			/*!< GPIO direction '0' IN;  '1' OUT*/
 } gpioConf_t;
 /*==================[internal functions declaration]=========================*/
+
 int8_t  convertToBcdArray (uint32_t data, uint8_t digits, uint8_t * bcd_number)
 {
-	for(int i=2; i<digits; i--){
-		bcd_number[i]=data%10;
+	for(int i=0; i<digits; i++){
+		bcd_number[digits-1-i]=data%10;
 		data=data/10;
 	}
 return 1;
 }
 
 void BCDtoPin (uint8_t digitBCD, gpioConf_t *gpio){   //Funcion que incializa y compara bit a bit
+	
 	uint8_t mask=1;
 	for(int i=0;i<4;i++)
 	{
@@ -63,17 +67,33 @@ void BCDtoPin (uint8_t digitBCD, gpioConf_t *gpio){   //Funcion que incializa y 
 	}
 
 }
-funcion6 ()
+
+void funBCDtoLCD (uint32_t value, uint8_t digit, gpioConf_t *pinBCD, gpioConf_t *pinsMUX)
 {
-	convertToBcdArray()
+	uint8_t vector[3];
+	convertToBcdArray(value,digit,vector);
+	for (uint8_t i=0; i<3; i++){
+		GPIOInit(pinsMUX[i].pin,pinsMUX[i].dir);
+	}
+	for(uint8_t i=0;i<digit;i++){
+		BCDtoPin(vector[i],pinBCD);
+		GPIOOn(pinsMUX[i].pin);
+		GPIOOff(pinsMUX[i].pin);
+		printf ("Sacando numero %d\n",vector[i]);
+		vTaskDelay(1000 / portTICK_PERIOD_MS);
+
+	}
 
 }
 /*==================[external functions definition]==========================*/
 void app_main(void){
 
 	
-	uint8_t valor = 5;
 	gpioConf_t pines[4]={{GPIO_20,GPIO_OUTPUT},{GPIO_21,GPIO_OUTPUT},{GPIO_22,GPIO_OUTPUT},{GPIO_23,GPIO_OUTPUT}}; //Vector de struct para incializar GPIO
+    uint32_t value = 123;
+	gpioConf_t pinMUX[3]={{GPIO_19, GPIO_OUTPUT},{GPIO_18, GPIO_OUTPUT},{GPIO_9, GPIO_OUTPUT}};
+	printf("Arranca programa\n");
+	funBCDtoLCD(value,3,pines,pinMUX);
 	
 
 }
